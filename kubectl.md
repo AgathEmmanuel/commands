@@ -5,9 +5,17 @@
 [https://kubernetes.io/docs/reference/kubectl/cheatsheet/](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)  
 
 
+## Workout
 ```
-kubectl Cheat Sheet
+kubectl run nginx --image=nginx:1.15.7
 
+
+
+```
+
+##  kubectl Cheat Sheet
+
+```
 This page contains a list of commonly used kubectl commands and flags.
 Kubectl autocomplete
 BASH
