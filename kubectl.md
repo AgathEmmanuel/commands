@@ -5,14 +5,212 @@
 [https://kubernetes.io/docs/reference/kubectl/cheatsheet/](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)  
 
 
-## Workout
+## Workout with nginx
 ```
 kubectl run nginx --image=nginx:1.15.7
 
+kubectl expose deployments nginx --port=80 --type=LoadBalancer
+
+kubectl get svc
+
+curl <external-ip>
+
+kubectl get deploy
+kubectl get pods
+kubectl get replicasets
+
+kubectl scale nginx --replicas=3
+
+
+kubectl autoscale nginx --min=10 --max=15 --cpu=80
+
+
+kubectl get pods -l "app=nginx" -o yaml
+
+
+
+
+# applying a rolling update
+
+k apply -f deploy-file
+
+k set image deploy deploy-name image image-name:tag
+
+k edit deploy deploy-name
+
+kind: Service
+spec:
+    selector:
+      app: my-app
+      version: v1
+
+k patch service my-app-service -p {"spec":{"selector":{"version":"v2"}}}
+
+
+# applying a canary deployment
+
+kind: Service
+spec:
+    slector:
+      app: my-app
+
+
+k apply -f my-app-v2.yaml
+k scale deploy my-app-v2 --replicas=10
+k delete -f my-app-v1.yaml
+
+# session affinity ensusres that all client requests are sent to the same pod
+
+# A/B testing is used to measure the effectiveness and functionality in an application
+
+
+# Shadow testing allows you to run a new hidden version
+# production traffic  and   mirrored traffic
+
+
+# Choosing the right strategy
+- recreate
+- rolling update
+- blue/green
+- canary
+- A/B
+- shadow
+
+
+k rollout pause deploy deploy-name
+
+k rollout resume deploy deploy-name
+
+k rollout status deploy deploy-name
+
+k rollout undo deploy deploy-name
+
+k rollout undo deploy deploy-name --to-revision=2
+
+k rollout history deploy deploy-name --revision=2
+
+
+
+
+
+gcloud auth list
+gcloud config list project
+export my_zone=us-central1-a
+export my_cluster=standard-cluster-1
+
+source <(kubectl completion bash)
+
+gcloud container clusters get-credentials $my_cluster --zone $my_zone
+
+kubectl apply -f ./nginx-deploy.yaml
+
+kubectl get deployments
+
+kubectl scale --replicas=3 deployment nginx-deployment
+
+kubectl set image deployment.v1.apps/nginx-deployment nginx=nginx:1.9.1 --record
+
+kubectl rollout status deployment.v1.apps/nginx-deployment
+
+kubectl rollout history deployment nginx-deployment
+
+
+kubectl rollout undo deployments nginx-deployment
+
+kubectl rollout history deployment nginx-deployment
+
+kubectl rollout history deployment/nginx-deployment --revision=3
+
+
+kubectl apply -f ./nginx-svc.yaml
+
+kubectl get service nginx
+
+kubectl apply -f nginx-deploy-canary.yaml
+
+kubectl scale --replicas=0 deployment nginx-deployment
+
+
+
+
+kubectl apply -f pvc-demo.yaml
+
+kubectl get persistentvolumeclaim
+
+kubectl apply -f pod-volume-demo.yaml
+
+kubectl get pods
+
+kubectl exec -it pvc-demo-pod -- sh
+
+echo Test webpage in a persistent volume!>/var/www/html/index.html
+chmod +x /var/www/html/index.html
+
+cat /var/www/html/index.html
+
+exit
+
+
+
+kubectl delete pod pvc-demo-pod
+
+kubectl get pods
+
+kubectl get persistentvolumeclaim
+
+kubectl apply -f pod-volume-demo.yaml
+
+kubectl get pods
+
+kubectl exec -it pvc-demo-pod -- sh
+
+cat /var/www/html/index.html
+
+kubectl delete pod pvc-demo-pod
+
+
+
+kubectl apply -f statefulset-demo.yaml
+
+kubectl describe statefulset statefulset-demo
+
+kubectl get pvc
+
+kubectl describe pvc hello-web-disk-statefulset-demo-0
+
+kubectl exec -it statefulset-demo-0 -- sh
+
+cat /var/www/html/index.html
+
+echo Test webpage in a persistent volume!>/var/www/html/index.html
+chmod +x /var/www/html/index.html
+
+cat /var/www/html/index.html
+
+exit
+
+kubectl delete pod statefulset-demo-0
+
+kubectl get pods
+
+kubectl exec -it statefulset-demo-0 -- sh
+
+cat /var/www/html/index.html
+
+exit
+
+
+
+
+
+
+
+
+
+
 
 
 ```
-
 ##  kubectl Cheat Sheet
 
 ```
@@ -420,3 +618,6 @@ Verbosity	Description
 ```
 
 
+# Links
+[https://github.com/GoogleCloudPlatform/training-data-analyst](https://github.com/GoogleCloudPlatform/training-data-analyst)  
+[https://kubernetes.io/docs/reference/kubectl/cheatsheet/](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)  
