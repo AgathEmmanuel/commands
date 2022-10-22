@@ -128,9 +128,9 @@ Some Useful NSE Scripts
 
 nmap -sU -A -PN -n -pU:19,53,123,161 -script=ntp-monlist,dns-recursion,snmp-sysdescr 192.168.20.2/24 					    	    Scan for UDP DDOS reflectors 	
 nmap --script=http-title 192.168.20.128 		Gather page titles from HTTP Servers 	
-nmap --script=http-headers 192.168.20.128 	Get HTTP headers of web services 	
-nmap --script=http-enum 192.168.20.128 		Find web apps from known paths 	
-nmap -sU --script nbtstat.nse -p 137 192.168.20.128 	 Find exposed Netbios servers 	
+nmap --script=http-headers 192.168.20.128 		Get HTTP headers of web services 	
+nmap --script=http-enum 192.168.20.128 			Find web apps from known paths 	
+nmap -sU --script nbtstat.nse -p 137 192.168.20.128 	Find exposed Netbios servers 	
 
 
 
